@@ -9,7 +9,7 @@ function Alert(props) {
 
   return (
     <>
-         <div className={`alert alert-${props.alert.type} d-flex align-items-center`} role="alert">
+         <div className={`alert alert-${props.alert.type} d-flex align-items-center  my-0`} style={{height:40}} role="alert">
          <div>
           <strong>{props.alert.type}</strong> {props.alert.msg}   
          </div>

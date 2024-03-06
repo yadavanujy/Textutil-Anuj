@@ -2,14 +2,14 @@ import React,{useState} from 'react';
 import './App.css';
 import Navbar from "./components/Navbar";
 import Alert from './components/Alert';
-// import About from './components/About';
+import About from './components/About';
 import Textform from './components/Textform';
 
-// import {
-//   BrowserRouter as Router,
-//   Switch,
-//   Route
-// } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 
 
 function App() {
@@ -35,8 +35,17 @@ function App() {
     setAlert("");
    },1500);
   }
-
-  const toggleMode=()=>{
+  const removeBodyClasses=()=>{
+ document.body.classList.remove('bg-light')
+ document.body.classList.remove('bg-primary')
+ document.body.classList.remove('bg-success')
+ document.body.classList.remove('bg-danger')
+ document.body.classList.remove('bg-warning')
+ document.body.classList.remove('bg-dark')
+  }
+  const toggleMode=(cls)=>{
+    removeBodyClasses();
+    document.body.classList.add('bg-'+cls);
     if(mode==="dark"){
       setMode("light")
       document.body.style.backgroundColor="white";
@@ -51,18 +60,30 @@ function App() {
     }
     else{
       setMode("dark")
-      document.body.style.backgroundColor="rgb(20 38 86)";
+      document.body.style.backgroundColor="rgb(5 51 78)";
       showAlert("Dark mode is enabled","success");
       // document.title="Dark mode";
       
     }
   }
   return (
-  <>
+   <>
   
+   <Router>
    <Navbar mode={mode} toggleMode={toggleMode} /> 
    <Alert alert={alert} />
-   <Textform heading="Enter the text to analyze below" mode={mode} showAlert={showAlert}/>
+   <div className="container my-3">
+    <Switch>
+      <Route exact path="/about">
+        <About mode={mode}/>
+      </Route>
+      <Route exact path="/">
+      <Textform heading="Try Textutil-Word counter,Character Counter,Remove Extra Spaces" mode={mode} showAlert={showAlert}/>
+      </Route>
+    </Switch>
+   </div>
+   
+    </Router>
    </>
   );
 }
